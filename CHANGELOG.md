@@ -1,3 +1,7 @@
+## v1.0.4:
+
+* use `file_cache_path` instead of /tmp
+
 ## v1.0.2:
 
 * Use strings instead of symbols for attributes

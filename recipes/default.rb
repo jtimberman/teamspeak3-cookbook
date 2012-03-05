@@ -24,10 +24,10 @@ service "teamspeak3" do
   action :nothing
 end
 
-remote_file "/tmp/#{basever}.tar.gz" do
+remote_file File.join(Chef::Config[:file_cache_path], "#{basever}.tar.gz") do
   source node['ts3']['url']
   mode 0644
-  not_if { ::FileTest.exists?("/tmp/#{basever}.tar.gz") }
+  not_if { ::FileTest.exists?(File.join(Chef::Config[:file_cache_path], "#{basever}.tar.gz")) }
 end
 
 u = user "teamspeak-server" do
