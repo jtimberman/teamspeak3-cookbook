@@ -17,15 +17,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-base = "teamspeak3-server_linux-#{node[:ts3][:arch]}"
-basever = "#{base}-#{node[:ts3][:version]}"
+base = "teamspeak3-server_linux-#{node['ts3']['arch']}"
+basever = "#{base}-#{node['ts3']['version']}"
 
 service "teamspeak3" do
   action :nothing
 end
 
 remote_file "/tmp/#{basever}.tar.gz" do
-  source node[:ts3][:url]
+  source node['ts3']['url']
   mode 0644
   not_if { ::FileTest.exists?("/tmp/#{basever}.tar.gz") }
 end
@@ -47,14 +47,14 @@ execute "install_ts3" do
   cwd "/srv"
   user "teamspeak-server"
   command "tar zxf /tmp/#{basever}.tar.gz"
-  not_if { ::FileTest.exists?("/srv/#{base}/ts3server_linux_#{node[:ts3][:arch]}") }
+  not_if { ::FileTest.exists?("/srv/#{base}/ts3server_linux_#{node['ts3']['arch']}") }
 end
 
 link "/srv/teamspeak3" do
   to "/srv/#{base}"
 end
 
-case node[:platform]
+case node['platform']
 when "ubuntu","debian"
   runit_service "teamspeak3"
 when "arch"
