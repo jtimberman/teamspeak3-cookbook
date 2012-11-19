@@ -3,7 +3,7 @@
 # Cookbook Name:: teamspeak3
 # Recipe:: default
 #
-# Copyright 2008-2011, Joshua Timberman
+# Copyright 2008-2012, Joshua Timberman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -75,12 +75,4 @@ end
 log "Set up teamspeak3 server. To get the server admin password and token, check the log." do
   action :nothing
   subscribes :write, resources(:execute => "install_ts3")
-end
-
-package "perl-net-telnet" do
-  package_name "libnet-telnet-perl" if platform?("ubuntu")
-end
-
-munin_plugin "teamspeak_user" do
-  create_file true
 end
