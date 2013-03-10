@@ -24,10 +24,12 @@ service "teamspeak3" do
   action :nothing
 end
 
-remote_file File.join(Chef::Config[:file_cache_path], "#{basever}.tar.gz") do
+cached_installation_file = File.join(Chef::Config[:file_cache_path], "#{basever}.tar.gz")
+
+remote_file cached_installation_file do
   source node['ts3']['url']
   mode 0644
-  not_if { ::FileTest.exists?(File.join(Chef::Config[:file_cache_path], "#{basever}.tar.gz")) }
+  not_if { ::FileTest.exists?(cached_installation_file) }
 end
 
 u = user "teamspeak-server" do
@@ -46,7 +48,7 @@ end
 execute "install_ts3" do
   cwd "/srv"
   user "teamspeak-server"
-  command "tar zxf /tmp/#{basever}.tar.gz"
+  command "tar zxf #{ cached_installation_file }"
   not_if { ::FileTest.exists?("/srv/#{base}/ts3server_linux_#{node['ts3']['arch']}") }
 end
 
