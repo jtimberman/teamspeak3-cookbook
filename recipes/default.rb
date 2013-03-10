@@ -56,6 +56,7 @@ end
 
 case node['platform']
 when "ubuntu","debian"
+  include_recipe "runit" unless node['ts3']['skip_runit_installation']
   runit_service "teamspeak3"
 when "arch"
   template "/etc/rc.d/teamspeak3" do
