@@ -11,6 +11,7 @@ Attributes are in the `ts3` keyspace.
 * version - Specifies the version to download and set up version-specific directories. This is an override attribute so the default attributes get set correctly with it.
 * arch - Specifies the architecture to download based on the node.kernel.machine. Valid values are amd64 or x86.
 * url - Download URL to use. Note that the teamspeak releases are in a version specific subdirectory that isn't detected automatically, and must be modified manually when updating the version to use.
+* skip_runit_installation - Do not automatically install runit before installing the runit service (use this only if you install runit in a different recipe or installation will fail at this step)
 
 The client recipe doesn't use any attributes. Yet?
 
