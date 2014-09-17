@@ -35,25 +35,25 @@ end
 u = user "teamspeak-server" do
   action :nothing
   system true
-  home "/srv/#{base}"
+  home "#{node['ts3']['install_dir']}/#{base}"
 end
 
 u.run_action(:create)
 
-directory "/srv/#{base}" do
+directory "#{node['ts3']['install_dir']}/#{base}" do
   owner "teamspeak-server"
   group "teamspeak-server"
 end
 
 execute "install_ts3" do
-  cwd "/srv"
+  cwd "#{node['ts3']['install_dir']}"
   user "teamspeak-server"
   command "tar zxf #{ cached_installation_file }"
-  not_if { ::FileTest.exists?("/srv/#{base}/ts3server_linux_#{node['ts3']['arch']}") }
+  not_if { ::FileTest.exists?("#{node['ts3']['install_dir']}/#{base}/ts3server_linux_#{node['ts3']['arch']}") }
 end
 
-link "/srv/teamspeak3" do
-  to "/srv/#{base}"
+link "#{node['ts3']['install_dir']}/teamspeak3" do
+  to "#{node['ts3']['install_dir']}/#{base}"
 end
 
 case node['platform']
@@ -66,7 +66,7 @@ when "arch"
     owner "root"
     group "root"
     mode 0755
-    variables :base => "/srv/#{base}"
+    variables :base => "#{node['ts3']['install_dir']}/#{base}"
   end
 
   service "teamspeak3" do

@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+node.default['ts3']['install_dir'] = "/srv"
 node.default['ts3']['version'] = "3.0.6.1"
 node.default['ts3']['arch'] = node['kernel']['machine'] =~ /x86_64/ ? "amd64" : "x86"
 node.default['ts3']['url'] = "http://ftp.4players.de/pub/hosted/ts3/releases/#{node['ts3']['version']}/teamspeak3-server_linux-#{node['ts3']['arch']}-#{node['ts3']['version']}.tar.gz"
